@@ -33,12 +33,12 @@ public class ArticleRepository {
         return preparedStatement.executeQuery();
     }
 
-    public ResultSet loadById (int id) throws SQLException {
+    public ResultSet loadByTitle (String title) throws SQLException {
         String query = """
-                select * from articles where id = ? and ispublished =true;
+                select * from articles where title = ? and ispublished =true;
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
-        preparedStatement.setInt(1,id);
+        preparedStatement.setString(1,title);
         return preparedStatement.executeQuery();
     }
 
