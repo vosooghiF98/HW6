@@ -7,7 +7,7 @@ public class Article {
     private String content;
     private String createDate;
     private boolean isPublished;
-    private int userId;
+    private User user;
 
     public int getId() {
         return id;
@@ -57,11 +57,11 @@ public class Article {
         isPublished = published;
     }
 
-    public int getUserId() {
-        return userId;
+    public User getUser() {
+        return user;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
+    public void setUser(User user) {
+        this.user = user;
     }
 }

@@ -34,8 +34,8 @@ public class User {
         this.nationalCode = nationalCode;
     }
 
-    public Date getBirthday() {
-        return Date.valueOf(birthday);
+    public String getBirthday() {
+        return birthday;
     }
 
     public void setBirthday(String birthday) {

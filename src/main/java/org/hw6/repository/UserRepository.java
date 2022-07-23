@@ -4,6 +4,7 @@ import org.hw6.config.DBConfig;
 import org.hw6.entity.User;
 
 import java.lang.module.ResolutionException;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -17,8 +18,8 @@ public class UserRepository {
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getNationalCode());
-        preparedStatement.setDate(3, user.getBirthday());
-        preparedStatement.setString(4, user.getPassword());
+        preparedStatement.setDate(3, Date.valueOf(user.getBirthday()));
+        preparedStatement.setString(4, user.getNationalCode());
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
@@ -31,5 +32,17 @@ public class UserRepository {
         preparedStatement.setString(1, userName);
         preparedStatement.setString(2, password);
         return preparedStatement.executeQuery();
+    }
+
+    public void changePass(String userName , String passWord , String newPassword) throws SQLException {
+        String query = """
+                update users set password = ? where username = ? and password = ?;
+                """;
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        preparedStatement.setString(1,newPassword);
+        preparedStatement.setString(2,userName);
+        preparedStatement.setString(3,passWord);
+        preparedStatement.executeUpdate();
+        preparedStatement.close();
     }
 }
