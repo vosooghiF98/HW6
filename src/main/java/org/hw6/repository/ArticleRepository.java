@@ -12,8 +12,8 @@ import java.sql.SQLException;
 public class ArticleRepository {
     public void save(Article article) throws SQLException {
         String query = """
-                insert into articles (title, brief, content, createdate, userid) 
-                values (?,?,?,?,?);
+                insert into articles (title, brief, content, createdate, userid,ispublished) 
+                values (?,?,?,?,?,false);
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setString(1,article.getTitle());

@@ -9,6 +9,7 @@ public class User {
     private String nationalCode;
     private String birthday;
     private String password;
+    private ArticleList articles;
 
     public int getId() {
         return id;
@@ -48,5 +49,13 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public ArticleList getArticles() {
+        return articles;
+    }
+
+    public void setArticles(ArticleList articles) {
+        this.articles = articles;
     }
 }
