@@ -6,7 +6,7 @@ public class Article {
     private String brief;
     private String content;
     private String createDate;
-    private boolean isPublished;
+    private String isPublished;
     private User user;
 
     public int getId() {
@@ -49,11 +49,11 @@ public class Article {
         this.createDate = createDate;
     }
 
-    public boolean isPublished() {
+    public String getIsPublished() {
         return isPublished;
     }
 
-    public void setPublished(boolean published) {
+    public void setPublished(String published) {
         isPublished = published;
     }
 

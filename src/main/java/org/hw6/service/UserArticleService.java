@@ -18,10 +18,10 @@ public class UserArticleService {
             article.setBrief(resultSet.getString("brief"));
             article.setContent(resultSet.getString("content"));
             article.setCreateDate(String.valueOf(resultSet.getDate("createdate")));
-            article.setPublished(resultSet.getBoolean("ispublished"));
+            article.setPublished(resultSet.getString("ispublished"));
             System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle() + "\n"
                     + "brief : " + article.getBrief() + "\n" +  "content : " + article.getContent() + "\n"
-                    + "create date : " + article.getCreateDate() + "\n" + "Is published : " + article.isPublished());
+                    + "create date : " + article.getCreateDate() + "\n" + "Is published : " + article.getIsPublished());
         }
         resultSet.close();
 
@@ -31,7 +31,7 @@ public class UserArticleService {
         userArticleRepository.edit(article, userId,id);
     }
 
-    public void publish(boolean publish, int id, int userId) throws SQLException {
-        userArticleRepository.publish(publish, id,userId);
+    public void publish(String publish, String title, int userId) throws SQLException {
+        userArticleRepository.publish(publish, title,userId);
     }
 }

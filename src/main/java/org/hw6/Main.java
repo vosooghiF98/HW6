@@ -102,6 +102,7 @@ public class Main {
             button = check(1, 8);
             if (button == 1) {
                 articleService.loadAll();
+                System.out.println();
             }
             if (button == 2) {
                 System.out.print("Enter selected article's title : ");
@@ -125,57 +126,49 @@ public class Main {
                 }
                 Article article = new Article();
                 System.out.print("Enter new title : ");
-                article.setTitle(input.next());
+                article.setTitle(input.nextLine());
                 System.out.print("Enter new brief : ");
-                article.setBrief(input.next());
+                article.setBrief(input.nextLine());
                 System.out.print("Enter new content : ");
-                article.setContent(input.next());
+                article.setContent(input.nextLine());
                 while (true) {
                     System.out.print("Publish or unpublished your article : ");
-                    if (input.hasNextBoolean()) {
-                        article.setPublished(input.nextBoolean());
+                    String publish = input.next();
+                    if (publish.equals("published") || publish.equals("unpublished")) {
+                        article.setPublished(publish);
                         break;
                     } else {
-                        System.out.println("Enter true or false!");
-                        input.next();
+                        System.out.println("Enter published or unpublished!");
                     }
                 }
                 userArticleService.editMyArticle(article, user.getId(),id);
                 System.out.println("Your article edited.");
             }
             if (button == 5) {
-                int id;
-                while (true){
-                    System.out.print("Enter article's id : ");
-                    if (input.hasNextInt()){
-                        id = input.nextInt();
-                        break;
-                    }else {
-                        System.out.println("Enter Number!");
-                        input.next();
-                    }
-                }
-                System.out.print("Publish or unpublished your article : ");
-                boolean publish;
+                System.out.print("Enter your article's title : ");
+                String title = input.next();
+                String publish;
                 while (true) {
-                    if (input.hasNextBoolean()) {
-                        publish = input.nextBoolean();
+                    System.out.print("Publish or unpublished your article : ");
+                    String publish2 = input.next();
+                    if (publish2.equals("published") || publish2.equals("unpublished")) {
+                        publish = publish2;
                         break;
                     } else {
-                        System.out.println("Enter true or false!");
-                        input.next();
+                        System.out.println("Enter published or unpublished!");
                     }
                 }
-                userArticleService.publish(publish, id, user.getId());
+                userArticleService.publish(publish, title, user.getId());
             }
             if (button == 6) {
                 Article article = new Article();
                 System.out.print("Enter title : ");
-                article.setTitle(input.next());
+                input.nextLine();
+                article.setTitle(input.nextLine());
                 System.out.print("Enter brief : ");
-                article.setBrief(input.next());
+                article.setBrief(input.nextLine());
                 System.out.print("Enter content : ");
-                article.setContent(input.next());
+                article.setContent(input.nextLine());
                 System.out.print("Enter create date : ");
                 article.setCreateDate(input.next());
                 articleService.save(article, user.getId());

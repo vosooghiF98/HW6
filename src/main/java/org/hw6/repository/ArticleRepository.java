@@ -11,7 +11,7 @@ public class ArticleRepository {
     public void save(Article article,int userId) throws SQLException {
         String query = """
                 insert into articles (title, brief, content, createdate, userid,ispublished) 
-                values (?,?,?,?,?,false);
+                values (?,?,?,?,?,'unpublished');
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setString(1,article.getTitle());
@@ -25,7 +25,7 @@ public class ArticleRepository {
 
     public ResultSet loadByPublished() throws SQLException {
         String query = """
-                select title,brief from articles where ispublished = true;
+                select title,brief from articles where ispublished = 'published' ;
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         return preparedStatement.executeQuery();
@@ -33,7 +33,7 @@ public class ArticleRepository {
 
     public ResultSet loadByTitle (String title) throws SQLException {
         String query = """
-                select * from articles where title = ? and ispublished =true;
+                select * from articles where title = ? and ispublished = 'published';
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setString(1,title);
