@@ -31,4 +31,13 @@ public class UserArticleRepository {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    public void publish(boolean publish , int userId) throws SQLException {
+        String query = """
+                update articles set ispublished = ? where userid = ?;
+                """;
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        preparedStatement.setBoolean(1,publish);
+        preparedStatement.setInt(2,userId);
+    }
 }

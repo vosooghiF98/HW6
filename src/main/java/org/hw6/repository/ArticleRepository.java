@@ -42,12 +42,4 @@ public class ArticleRepository {
         return preparedStatement.executeQuery();
     }
 
-    public void publish(boolean publish) throws SQLException {
-        String query = """
-                update articles set ispublished = ?;
-                """;
-        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
-        preparedStatement.setBoolean(1,publish);
-    }
-
 }
