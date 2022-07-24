@@ -126,6 +126,7 @@ public class Main {
                 }
                 Article article = new Article();
                 System.out.print("Enter new title : ");
+                input.nextLine();
                 article.setTitle(input.nextLine());
                 System.out.print("Enter new brief : ");
                 article.setBrief(input.nextLine());
