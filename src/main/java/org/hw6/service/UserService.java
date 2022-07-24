@@ -16,7 +16,7 @@ public class UserService {
         userRepository.save(user);
     }
 
-    public boolean enter(String userName, String password) throws SQLException {
+    public User enter(String userName, String password) throws SQLException {
         ResultSet resultSet = userRepository.loadByUserAndPass(userName, password);
         if (resultSet.next()) {
             User user = new User();
@@ -24,9 +24,9 @@ public class UserService {
             user.setUserName(resultSet.getString("username"));
             user.setPassword(resultSet.getString("password"));
             resultSet.close();
-            return true;
+            return user;
         } else {
-            return false;
+            return null;
         }
     }
 

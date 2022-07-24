@@ -12,30 +12,27 @@ public class UserArticleService {
 
     public void loadMyArticles(int userId) throws SQLException {
         ResultSet resultSet = userArticleRepository.loadByUserId(userId);
-        if (resultSet.next()) {
-            while (resultSet.next()) {
-                Article article = new Article();
-                article.setId(resultSet.getInt("id"));
-                article.setTitle(resultSet.getString("title"));
-                article.setBrief(resultSet.getString("brief"));
-                article.setContent(resultSet.getString("content"));
-                article.setCreateDate(String.valueOf(resultSet.getDate("createdate")));
-                article.setPublished(resultSet.getBoolean("ispublished"));
-                System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle()
-                        + "brief : " + article.getBrief() + "content : " + article.getContent()
-                        + "create date : " + article.getCreateDate() + "Is published : " + article.isPublished());
-            }
-            resultSet.close();
-        } else {
-            System.out.println("You don't have any article!");
+        while (resultSet.next()) {
+            Article article = new Article();
+            article.setId(resultSet.getInt("id"));
+            article.setTitle(resultSet.getString("title"));
+            article.setBrief(resultSet.getString("brief"));
+            article.setContent(resultSet.getString("content"));
+            article.setCreateDate(String.valueOf(resultSet.getDate("createdate")));
+            article.setPublished(resultSet.getBoolean("ispublished"));
+            System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle() + "\n"
+                    + "brief : " + article.getBrief() + "\n" +  "content : " + article.getContent() + "\n"
+                    + "create date : " + article.getCreateDate() + "\n" + "Is published : " + article.isPublished());
         }
+        resultSet.close();
+
     }
 
-    public void editMyArticle(Article article, int userId) throws SQLException {
-        userArticleRepository.edit(article,userId);
+    public void editMyArticle(Article article, int userId,int id) throws SQLException {
+        userArticleRepository.edit(article, userId,id);
     }
 
     public void publish(boolean publish, int userId) throws SQLException {
-        userArticleRepository.publish(publish,userId);
+        userArticleRepository.publish(publish, userId);
     }
 }

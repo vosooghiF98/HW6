@@ -13,17 +13,13 @@ public class ArticleService {
 
     public void loadAll() throws SQLException {
         ResultSet resultSet = articleRepository.loadByPublished();
-        if (resultSet.next()) {
-            while (resultSet.next()) {
-                Article article = new Article();
-                article.setTitle(resultSet.getString("title"));
-                article.setBrief(resultSet.getString("brief"));
-                System.out.println("Title : " + article.getTitle() + "\n" + "Brief : " + article.getBrief());
-            }
-            resultSet.close();
-        }else {
-            System.out.println("No articles available!");
+        while (resultSet.next()) {
+            Article article = new Article();
+            article.setTitle(resultSet.getString("title"));
+            article.setBrief(resultSet.getString("brief"));
+            System.out.println("Title : " + article.getTitle() + "\n" + "Brief : " + article.getBrief());
         }
+        resultSet.close();
     }
 
     public void loadByTitle(String title) throws SQLException {
@@ -37,14 +33,14 @@ public class ArticleService {
             article.setCreateDate(resultSet.getString("createdate"));
             resultSet.close();
             System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle()
-            + "brief : " + article.getBrief() + "content : " + article.getContent() + "create date : " + article.getCreateDate());
-        }else {
+                    + "brief : " + article.getBrief() + "content : " + article.getContent() + "create date : " + article.getCreateDate());
+        } else {
             System.out.println("This article not exist!");
         }
     }
 
-    public void save(Article article,int userId) throws SQLException {
-        articleRepository.save(article,userId);
+    public void save(Article article, int userId) throws SQLException {
+        articleRepository.save(article, userId);
     }
 
 

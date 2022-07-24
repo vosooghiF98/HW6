@@ -77,8 +77,9 @@ public class Main {
                 String userName = input.next();
                 System.out.print("Enter password : ");
                 String passWord = input.next();
-                if(userService.enter(userName,passWord)){
+                if(userService.enter(userName,passWord) != null){
                     System.out.println("Welcome!");
+                    user = userService.enter(userName,passWord);
                     break;
                 }else {
                     System.out.println("Please Sign Up First!");
@@ -87,7 +88,7 @@ public class Main {
             }
         }
 
-        while (true){
+        do {
             System.out.println();
             System.out.println("Menu :");
             System.out.println("View all published articles : 1");
@@ -98,19 +99,30 @@ public class Main {
             System.out.println("Enter new article : 6");
             System.out.println("Change your password : 7");
             System.out.println("Exit : 8");
-            button = check(1,8);
-            if (button == 1){
+            button = check(1, 8);
+            if (button == 1) {
                 articleService.loadAll();
             }
-            if (button == 2){
+            if (button == 2) {
                 System.out.print("Enter selected article's title : ");
                 String title = input.next();
                 articleService.loadByTitle(title);
             }
-            if (button == 3){
+            if (button == 3) {
                 userArticleService.loadMyArticles(user.getId());
             }
-            if (button == 4){
+            if (button == 4) {
+                int id;
+                while (true){
+                    System.out.print("Enter article's id : ");
+                    if (input.hasNextInt()){
+                        id = input.nextInt();
+                        break;
+                    }else {
+                        System.out.println("Enter Number!");
+                        input.next();
+                    }
+                }
                 Article article = new Article();
                 System.out.print("Enter new title : ");
                 article.setTitle(input.next());
@@ -118,34 +130,34 @@ public class Main {
                 article.setBrief(input.next());
                 System.out.print("Enter new content : ");
                 article.setContent(input.next());
-                System.out.print("Publish or unpublished your article : ");
-                while (true){
-                    if (input.hasNextBoolean()){
+                while (true) {
+                    System.out.print("Publish or unpublished your article : ");
+                    if (input.hasNextBoolean()) {
                         article.setPublished(input.nextBoolean());
                         break;
-                    }else {
+                    } else {
                         System.out.println("Enter true or false!");
                         input.next();
                     }
                 }
-                userArticleService.editMyArticle(article,user.getId());
+                userArticleService.editMyArticle(article, user.getId(),id);
                 System.out.println("Your article edited.");
             }
-            if (button == 5){
+            if (button == 5) {
                 System.out.print("Publish or unpublished your article : ");
                 boolean publish;
-                while (true){
-                    if (input.hasNextBoolean()){
+                while (true) {
+                    if (input.hasNextBoolean()) {
                         publish = input.nextBoolean();
                         break;
-                    }else {
+                    } else {
                         System.out.println("Enter true or false!");
                         input.next();
                     }
                 }
-                userArticleService.publish(publish,user.getId());
+                userArticleService.publish(publish, user.getId());
             }
-            if (button == 6){
+            if (button == 6) {
                 Article article = new Article();
                 System.out.print("Enter title : ");
                 article.setTitle(input.next());
@@ -155,19 +167,16 @@ public class Main {
                 article.setContent(input.next());
                 System.out.print("Enter create date : ");
                 article.setCreateDate(input.next());
-                articleService.save(article,user.getId());
+                articleService.save(article, user.getId());
                 System.out.println("Your article saved.");
             }
-            if (button == 7){
+            if (button == 7) {
                 System.out.print("Enter your new password : ");
                 String newPassword = input.next();
-                userService.changePass(user.getUserName(),user.getPassword(),newPassword);
+                userService.changePass(user.getUserName(), user.getPassword(), newPassword);
                 System.out.println("Your password changed.");
             }
-            if (button == 8){
-                break;
-            }
 
-        }
+        } while (button != 8);
     }
 }

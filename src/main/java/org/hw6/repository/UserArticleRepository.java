@@ -17,7 +17,7 @@ public class UserArticleRepository {
         return preparedStatement.executeQuery();
     }
 
-    public void edit(Article article, int userId) throws SQLException {
+    public void edit(Article article, int userId,int id) throws SQLException {
         String query = """
                 update articles set title = ? , brief = ? , content = ? , ispublished = ? where id = ? and userid = ?;
                 """;
@@ -26,7 +26,7 @@ public class UserArticleRepository {
         preparedStatement.setString(2, article.getBrief());
         preparedStatement.setString(3,article.getContent());
         preparedStatement.setBoolean(4,article.isPublished());
-        preparedStatement.setInt(5,article.getId());
+        preparedStatement.setInt(5,id);
         preparedStatement.setInt(6,userId);
         preparedStatement.executeUpdate();
         preparedStatement.close();
