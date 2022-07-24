@@ -77,8 +77,9 @@ public class Main {
                 String userName = input.next();
                 System.out.print("Enter password : ");
                 String passWord = input.next();
-                if(userService.enter(userName,passWord)){
+                if(userService.enter(userName,passWord) != null){
                     System.out.println("Welcome!");
+                    user = userService.enter(userName,passWord);
                     break;
                 }else {
                     System.out.println("Please Sign Up First!");
