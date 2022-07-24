@@ -30,8 +30,8 @@ public class ArticleService {
             article.setContent(resultSet.getString("content"));
             article.setCreateDate(resultSet.getString("createdate"));
             resultSet.close();
-            System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle()
-                    + "brief : " + article.getBrief() + "content : " + article.getContent() + "create date : " + article.getCreateDate());
+            System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle() + "\n"
+                    + "brief : " + article.getBrief() + "\n" + "content : " + article.getContent() + "\n" + "create date : " + article.getCreateDate());
         } else {
             System.out.println("This article not exist!");
         }

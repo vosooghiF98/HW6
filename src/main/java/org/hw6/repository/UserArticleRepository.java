@@ -32,12 +32,13 @@ public class UserArticleRepository {
         preparedStatement.close();
     }
 
-    public void publish(boolean publish , int userId) throws SQLException {
+    public void publish(boolean publish ,int id , int userId) throws SQLException {
         String query = """
-                update articles set ispublished = ? where userid = ?;
+                update articles set ispublished = ? where id = ? and userid = ?;
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setBoolean(1,publish);
-        preparedStatement.setInt(2,userId);
+        preparedStatement.setInt(2,id);
+        preparedStatement.setInt(3,userId);
     }
 }

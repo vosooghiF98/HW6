@@ -144,6 +144,17 @@ public class Main {
                 System.out.println("Your article edited.");
             }
             if (button == 5) {
+                int id;
+                while (true){
+                    System.out.print("Enter article's id : ");
+                    if (input.hasNextInt()){
+                        id = input.nextInt();
+                        break;
+                    }else {
+                        System.out.println("Enter Number!");
+                        input.next();
+                    }
+                }
                 System.out.print("Publish or unpublished your article : ");
                 boolean publish;
                 while (true) {
@@ -155,7 +166,7 @@ public class Main {
                         input.next();
                     }
                 }
-                userArticleService.publish(publish, user.getId());
+                userArticleService.publish(publish, id, user.getId());
             }
             if (button == 6) {
                 Article article = new Article();

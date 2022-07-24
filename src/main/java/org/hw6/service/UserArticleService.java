@@ -31,7 +31,7 @@ public class UserArticleService {
         userArticleRepository.edit(article, userId,id);
     }
 
-    public void publish(boolean publish, int userId) throws SQLException {
-        userArticleRepository.publish(publish, userId);
+    public void publish(boolean publish, int id, int userId) throws SQLException {
+        userArticleRepository.publish(publish, id,userId);
     }
 }
