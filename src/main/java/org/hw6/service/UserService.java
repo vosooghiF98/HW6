@@ -1,11 +1,7 @@
 package org.hw6.service;
 
-import jdk.jfr.consumer.RecordedStackTrace;
-import org.hw6.entity.Article;
 import org.hw6.entity.User;
-import org.hw6.repository.ArticleRepository;
 import org.hw6.repository.UserRepository;
-
 import java.sql.ResultSet;
 import java.sql.SQLException;
 

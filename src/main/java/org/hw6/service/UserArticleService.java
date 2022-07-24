@@ -1,7 +1,6 @@
 package org.hw6.service;
 
 import org.hw6.entity.Article;
-import org.hw6.entity.User;
 import org.hw6.repository.UserArticleRepository;
 
 import java.sql.ResultSet;

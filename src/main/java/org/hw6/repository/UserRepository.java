@@ -3,7 +3,6 @@ package org.hw6.repository;
 import org.hw6.config.DBConfig;
 import org.hw6.entity.User;
 
-import java.lang.module.ResolutionException;
 import java.sql.*;
 
 public class UserRepository {

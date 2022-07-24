@@ -2,8 +2,6 @@ package org.hw6.repository;
 
 import org.hw6.config.DBConfig;
 import org.hw6.entity.Article;
-
-import java.awt.geom.RectangularShape;
 import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
