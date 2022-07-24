@@ -10,7 +10,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 public class ArticleRepository {
-    public void save(Article article) throws SQLException {
+    public void save(Article article,int userId) throws SQLException {
         String query = """
                 insert into articles (title, brief, content, createdate, userid,ispublished) 
                 values (?,?,?,?,?,false);
@@ -20,7 +20,7 @@ public class ArticleRepository {
         preparedStatement.setString(2,article.getBrief());
         preparedStatement.setString(3,article.getContent());
         preparedStatement.setDate(4, Date.valueOf(article.getCreateDate()));
-        preparedStatement.setInt(5,article.getUser().getId());
+        preparedStatement.setInt(5,userId);
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }

@@ -1,36 +1,45 @@
 package org.hw6;
 
+import org.hw6.entity.Article;
 import org.hw6.entity.User;
+import org.hw6.service.ArticleService;
+import org.hw6.service.UserArticleService;
 import org.hw6.service.UserService;
 
 import java.sql.SQLException;
 import java.util.Scanner;
 
 public class Main {
-    static Scanner input = new Scanner(System.in);
-    public static void main(String[] args) throws SQLException {
-        UserService userService = new UserService();
-        User user = new User();
-        System.out.println("Menu : ");
-        System.out.println("Sign Up : 1");
-        System.out.println("Enter : 2");
+    //check function input
+    public static int check(int first,int last){
         System.out.print("Enter Your Function : ");
-        //check function input
         int button;
         while (true){
             if (input.hasNextInt()){
                 int temp = input.nextInt();
-                if (temp >= 1 && temp <= 2){
+                if (temp >= first && temp <= last){
                     button = temp;
-                    break;
+                    return button;
                 }else {
-                    System.out.print("Enter Number Between 1 and 2 : ");
+                    System.out.print("Enter Number Between" +first+ "and" + last + " : ");
                 }
             }else {
                 System.out.print("Enter Number! : ");
                 input.next();
             }
         }
+    }
+    static Scanner input = new Scanner(System.in);
+    public static void main(String[] args) throws SQLException {
+        UserService userService = new UserService();
+        ArticleService articleService = new ArticleService();
+        UserArticleService userArticleService = new UserArticleService();
+
+        User user = new User();
+        System.out.println("Menu : ");
+        System.out.println("Sign Up : 1");
+        System.out.println("Enter : 2");
+        int button = check(1,2);
         //star menu function
         while (true){
             if (button == 1){
@@ -77,9 +86,88 @@ public class Main {
                 }
             }
         }
-        System.out.println("Menu :");
 
+        while (true){
+            System.out.println();
+            System.out.println("Menu :");
+            System.out.println("View all published articles : 1");
+            System.out.println("View the selected article of all published articles : 2");
+            System.out.println("View your articles : 3");
+            System.out.println("Edit your article : 4");
+            System.out.println("Publish or unpublished your article : 5");
+            System.out.println("Enter new article : 6");
+            System.out.println("Change your password : 7");
+            System.out.println("Exit : 8");
+            button = check(1,8);
+            if (button == 1){
+                articleService.loadAll();
+            }
+            if (button == 2){
+                System.out.print("Enter selected article's title : ");
+                String title = input.next();
+                articleService.loadByTitle(title);
+            }
+            if (button == 3){
+                userArticleService.loadMyArticles(user.getId());
+            }
+            if (button == 4){
+                Article article = new Article();
+                System.out.print("Enter new title : ");
+                article.setTitle(input.next());
+                System.out.print("Enter new brief : ");
+                article.setBrief(input.next());
+                System.out.print("Enter new content : ");
+                article.setContent(input.next());
+                System.out.print("Publish or unpublished your article : ");
+                while (true){
+                    if (input.hasNextBoolean()){
+                        article.setPublished(input.nextBoolean());
+                        break;
+                    }else {
+                        System.out.println("Enter true or false!");
+                        input.next();
+                    }
+                }
+                userArticleService.editMyArticle(article,user.getId());
+                System.out.println("Your article edited.");
+            }
+            if (button == 5){
+                System.out.print("Publish or unpublished your article : ");
+                boolean publish;
+                while (true){
+                    if (input.hasNextBoolean()){
+                        publish = input.nextBoolean();
+                        break;
+                    }else {
+                        System.out.println("Enter true or false!");
+                        input.next();
+                    }
+                }
+                userArticleService.publish(publish,user.getId());
+            }
+            if (button == 6){
+                Article article = new Article();
+                System.out.print("Enter title : ");
+                article.setTitle(input.next());
+                System.out.print("Enter brief : ");
+                article.setBrief(input.next());
+                System.out.print("Enter content : ");
+                article.setContent(input.next());
+                System.out.print("Enter create date : ");
+                article.setCreateDate(input.next());
+                articleService.save(article,user.getId());
+                System.out.println("Your article saved.");
+            }
+            if (button == 7){
+                System.out.print("Enter your new password : ");
+                String newPassword = input.next();
+                userService.changePass(user.getUserName(),user.getPassword(),newPassword);
+                System.out.println("Your password changed.");
+            }
+            if (button == 8){
+                break;
+            }
 
-
+        }
     }
 }

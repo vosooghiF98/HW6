@@ -20,6 +20,7 @@ public class UserService {
         ResultSet resultSet = userRepository.loadByUserAndPass(userName, password);
         if (resultSet.next()) {
             User user = new User();
+            user.setId(resultSet.getInt(1));
             user.setUserName(resultSet.getString("username"));
             user.setPassword(resultSet.getString("password"));
             resultSet.close();
@@ -27,6 +28,10 @@ public class UserService {
         } else {
             return false;
         }
+    }
+
+    public void changePass(String userName,String passWord ,String newPass) throws SQLException {
+        userRepository.changePass(userName,passWord,newPass);
     }
 
 

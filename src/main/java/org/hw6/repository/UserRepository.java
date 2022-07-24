@@ -4,10 +4,7 @@ import org.hw6.config.DBConfig;
 import org.hw6.entity.User;
 
 import java.lang.module.ResolutionException;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class UserRepository {
     public void save(User user) throws SQLException {
@@ -15,12 +12,16 @@ public class UserRepository {
                 insert into users (username, nationalcode, birthday, password) 
                 values (?,?,?,?);    
                 """;
-        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query, Statement.RETURN_GENERATED_KEYS);
         preparedStatement.setString(1, user.getUserName());
         preparedStatement.setString(2, user.getNationalCode());
         preparedStatement.setDate(3, Date.valueOf(user.getBirthday()));
         preparedStatement.setString(4, user.getNationalCode());
         preparedStatement.executeUpdate();
+        ResultSet generatedIds = preparedStatement.getGeneratedKeys();
+        generatedIds.next();
+        int id = generatedIds.getInt(1);
+        user.setId(id);
         preparedStatement.close();
     }
 

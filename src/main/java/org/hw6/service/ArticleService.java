@@ -11,18 +11,22 @@ import java.sql.SQLException;
 public class ArticleService {
     private ArticleRepository articleRepository = new ArticleRepository();
 
-    public void loadAll(User user) throws SQLException {
+    public void loadAll() throws SQLException {
         ResultSet resultSet = articleRepository.loadByPublished();
-        while (resultSet.next()) {
-            Article article = new Article();
-            article.setTitle(resultSet.getString("title"));
-            article.setBrief(resultSet.getString("brief"));
-            System.out.println("Title : " + article.getTitle() + "\n" + "Brief : " + article.getBrief());
+        if (resultSet.next()) {
+            while (resultSet.next()) {
+                Article article = new Article();
+                article.setTitle(resultSet.getString("title"));
+                article.setBrief(resultSet.getString("brief"));
+                System.out.println("Title : " + article.getTitle() + "\n" + "Brief : " + article.getBrief());
+            }
+            resultSet.close();
+        }else {
+            System.out.println("No articles available!");
         }
-        resultSet.close();
     }
 
-    public Article loadByTitle(User user, String title) throws SQLException {
+    public void loadByTitle(String title) throws SQLException {
         ResultSet resultSet = articleRepository.loadByTitle(title);
         if (resultSet.next()) {
             Article article = new Article();
@@ -31,15 +35,16 @@ public class ArticleService {
             article.setBrief(resultSet.getString("brief"));
             article.setContent(resultSet.getString("content"));
             article.setCreateDate(resultSet.getString("createdate"));
-            article.setPublished(resultSet.getBoolean("ispublished"));
             resultSet.close();
-            return article;
+            System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle()
+            + "brief : " + article.getBrief() + "content : " + article.getContent() + "create date : " + article.getCreateDate());
+        }else {
+            System.out.println("This article not exist!");
         }
-        return null;
     }
 
-    public void save(Article article) throws SQLException {
-        articleRepository.save(article);
+    public void save(Article article,int userId) throws SQLException {
+        articleRepository.save(article,userId);
     }
 
 
