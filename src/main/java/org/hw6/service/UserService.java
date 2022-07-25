@@ -8,14 +8,19 @@ import java.sql.SQLException;
 public class UserService {
     UserRepository userRepository = new UserRepository();
 
-    public void save(User user) throws SQLException {
+    public Boolean save(User user) throws SQLException {
         ResultSet resultSet = userRepository.checkSave(user.getNationalCode());
         if (!resultSet.next()) {
             userRepository.save(user);
+            System.out.println("Your password is your national code.");
+            System.out.println("Sign Up was successful.");
+            resultSet.close();
+            return true;
         }else {
             System.out.println("You have already registered!");
+            resultSet.close();
+            return false;
         }
-        resultSet.close();
     }
 
     public User enter(String userName, String password) throws SQLException {

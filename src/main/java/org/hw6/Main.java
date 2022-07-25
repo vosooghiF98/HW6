@@ -72,11 +72,9 @@ public class Main {
                 user.setNationalCode(nationalCode);
                 System.out.print("Enter birthday : ");
                 user.setBirthday(input.next());
-                System.out.println("Your password is your national code.");
-                userService.save(user);
-                System.out.println("Sign Up was successful.");
-                userService.enter(user.getUserName(), user.getPassword());
-                break;
+                if (userService.save(user)){
+                    break;
+                }
             }
 
             if (button == 2) {
