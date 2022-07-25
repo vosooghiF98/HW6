@@ -70,7 +70,7 @@ public class Main {
                 user.setBirthday(input.next());
                 System.out.println("Your password is your national code.");
                 userService.save(user);
-                System.out.println("Sign Up Completed");
+                System.out.println("Sign Up was successful.");
                 userService.enter(user.getUserName(),user.getPassword());
                 break;
             }
@@ -138,13 +138,16 @@ public class Main {
                     System.out.print("Enter new content : ");
                     article.setContent(input.nextLine());
                     while (true) {
-                        System.out.print("Publish or unpublished your article : ");
+                        System.out.print("Would you like your article to be published? : ");
                         String publish = input.next();
-                        if (publish.equals("published") || publish.equals("unpublished")) {
-                            article.setPublished(publish);
+                        if (publish.equalsIgnoreCase("yes")) {
+                            article.setPublished("published");
+                            break;
+                        } else if (publish.equalsIgnoreCase("no")) {
+                            article.setPublished("unpublished");
                             break;
                         } else {
-                            System.out.println("Enter published or unpublished!");
+                            System.out.println("Enter 'yes' or 'no' !");
                         }
                     }
                     userArticleService.editMyArticle(article, user.getId(), id);
@@ -155,13 +158,18 @@ public class Main {
                     String title = input.next();
                     String publish;
                     while (true) {
-                        System.out.print("Publish or unpublished your article : ");
+                        System.out.print("Would you like your article to be published? : ");
                         String publish2 = input.next();
-                        if (publish2.equals("published") || publish2.equals("unpublished")) {
-                            publish = publish2;
+                        if (publish2.equalsIgnoreCase("yes")) {
+                            publish = "published";
+                            System.out.println("Your article has been published.");
+                            break;
+                        } else if (publish2.equalsIgnoreCase("no")) {
+                            publish = "unpublished";
+                            System.out.println("Your article has been unpublished.");
                             break;
                         } else {
-                            System.out.println("Enter published or unpublished!");
+                            System.out.println("Enter 'yes' or 'no' !");
                         }
                     }
                     userArticleService.publish(publish, title, user.getId());
