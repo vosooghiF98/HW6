@@ -9,7 +9,13 @@ public class UserService {
     UserRepository userRepository = new UserRepository();
 
     public void save(User user) throws SQLException {
-        userRepository.save(user);
+        ResultSet resultSet = userRepository.checkSave(user.getNationalCode());
+        if (!resultSet.next()) {
+            userRepository.save(user);
+        }else {
+            System.out.println("You have already registered!");
+        }
+        resultSet.close();
     }
 
     public User enter(String userName, String password) throws SQLException {
@@ -22,6 +28,7 @@ public class UserService {
             resultSet.close();
             return user;
         } else {
+            resultSet.close();
             return null;
         }
     }

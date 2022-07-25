@@ -33,6 +33,7 @@ public class ArticleService {
             System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle() + "\n"
                     + "brief : " + article.getBrief() + "\n" + "content : " + article.getContent() + "\n" + "create date : " + article.getCreateDate());
         } else {
+            resultSet.close();
             System.out.println("This article not exist!");
         }
     }

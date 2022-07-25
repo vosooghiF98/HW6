@@ -45,4 +45,13 @@ public class UserRepository {
         preparedStatement.executeUpdate();
         preparedStatement.close();
     }
+
+    public ResultSet checkSave(String nationalCode) throws SQLException {
+        String query = """
+                select * from users where nationalcode = ?;
+                """;
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, nationalCode);
+        return preparedStatement.executeQuery();
+    }
 }
