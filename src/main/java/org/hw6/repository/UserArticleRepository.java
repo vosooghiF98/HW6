@@ -32,15 +32,25 @@ public class UserArticleRepository {
         preparedStatement.close();
     }
 
-    public void publish(String publish ,String title , int userId) throws SQLException {
+    public void publish(String publish ,int id , int userId) throws SQLException {
         String query = """
-                update articles set ispublished = ? where title = ? and userid = ?;
+                update articles set ispublished = ? where id = ? and userid = ?;
                 """;
         PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
         preparedStatement.setString(1,publish);
-        preparedStatement.setString(2,title);
+        preparedStatement.setInt(2,id);
         preparedStatement.setInt(3,userId);
         preparedStatement.executeUpdate();
         preparedStatement.close();
+    }
+
+    public ResultSet checkEdit(int id, int userId) throws SQLException {
+        String query = """
+                select * from articles where id = ? and userid = ?;
+                """;
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        preparedStatement.setInt(1,id);
+        preparedStatement.setInt(2,userId);
+        return preparedStatement.executeQuery();
     }
 }

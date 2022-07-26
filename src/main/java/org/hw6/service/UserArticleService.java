@@ -20,18 +20,30 @@ public class UserArticleService {
             article.setCreateDate(String.valueOf(resultSet.getDate("createdate")));
             article.setPublished(resultSet.getString("ispublished"));
             System.out.println("id : " + article.getId() + "\n" + "title : " + article.getTitle() + "\n"
-                    + "brief : " + article.getBrief() + "\n" +  "content : " + article.getContent() + "\n"
+                    + "brief : " + article.getBrief() + "\n" + "content : " + article.getContent() + "\n"
                     + "create date : " + article.getCreateDate() + "\n" + "Is published : " + article.getIsPublished());
         }
         resultSet.close();
 
     }
 
-    public void editMyArticle(Article article, int userId,int id) throws SQLException {
-        userArticleRepository.edit(article, userId,id);
+    public void editMyArticle(Article article, int userId, int id) throws SQLException {
+        userArticleRepository.edit(article, userId, id);
     }
 
-    public void publish(String publish, String title, int userId) throws SQLException {
-        userArticleRepository.publish(publish, title,userId);
+    public void publish(String publish, int id, int userId) throws SQLException {
+        userArticleRepository.publish(publish, id, userId);
+    }
+
+    public boolean checkEdit(int id, int userId) throws SQLException {
+        ResultSet resultSet = userArticleRepository.checkEdit(id, userId);
+        if (resultSet.next()) {
+            resultSet.close();
+            return true;
+        } else {
+            System.out.println("The selected article is not for you!");
+            resultSet.close();
+            return false;
+        }
     }
 }

@@ -129,50 +129,54 @@ public class Main {
                             input.next();
                         }
                     }
-                    Article article = new Article();
-                    System.out.print("Enter new title : ");
-                    input.nextLine();
-                    article.setTitle(input.nextLine());
-                    System.out.print("Enter new brief : ");
-                    article.setBrief(input.nextLine());
-                    System.out.print("Enter new content : ");
-                    article.setContent(input.nextLine());
-                    while (true) {
-                        System.out.print("Would you like your article to be published? : ");
-                        String publish = input.next();
-                        if (publish.equalsIgnoreCase("yes")) {
-                            article.setPublished("published");
-                            break;
-                        } else if (publish.equalsIgnoreCase("no")) {
-                            article.setPublished("unpublished");
-                            break;
-                        } else {
-                            System.out.println("Enter 'yes' or 'no' !");
+                    if (userArticleService.checkEdit(id,user.getId())) {
+                        Article article = new Article();
+                        System.out.print("Enter new title : ");
+                        input.nextLine();
+                        article.setTitle(input.nextLine());
+                        System.out.print("Enter new brief : ");
+                        article.setBrief(input.nextLine());
+                        System.out.print("Enter new content : ");
+                        article.setContent(input.nextLine());
+                        while (true) {
+                            System.out.print("Would you like your article to be published? : ");
+                            String publish = input.next();
+                            if (publish.equalsIgnoreCase("yes")) {
+                                article.setPublished("published");
+                                break;
+                            } else if (publish.equalsIgnoreCase("no")) {
+                                article.setPublished("unpublished");
+                                break;
+                            } else {
+                                System.out.println("Enter 'yes' or 'no' !");
+                            }
                         }
+                        userArticleService.editMyArticle(article, user.getId(), id);
+                        System.out.println("Your article edited.");
                     }
-                    userArticleService.editMyArticle(article, user.getId(), id);
-                    System.out.println("Your article edited.");
                 }
                 if (button == 3) {
-                    System.out.print("Enter your article's title : ");
-                    String title = input.next();
-                    String publish;
-                    while (true) {
-                        System.out.print("Would you like your article to be published? : ");
-                        String publish2 = input.next();
-                        if (publish2.equalsIgnoreCase("yes")) {
-                            publish = "published";
-                            System.out.println("Your article has been published.");
-                            break;
-                        } else if (publish2.equalsIgnoreCase("no")) {
-                            publish = "unpublished";
-                            System.out.println("Your article has been unpublished.");
-                            break;
-                        } else {
-                            System.out.println("Enter 'yes' or 'no' !");
+                    System.out.print("Enter your article's id : ");
+                    int id = input.nextInt();
+                    if (userArticleService.checkEdit(id, user.getId())) {
+                        String publish;
+                        while (true) {
+                            System.out.print("Would you like your article to be published? : ");
+                            String publish2 = input.next();
+                            if (publish2.equalsIgnoreCase("yes")) {
+                                publish = "published";
+                                System.out.println("Your article has been published.");
+                                break;
+                            } else if (publish2.equalsIgnoreCase("no")) {
+                                publish = "unpublished";
+                                System.out.println("Your article has been unpublished.");
+                                break;
+                            } else {
+                                System.out.println("Enter 'yes' or 'no' !");
+                            }
                         }
+                        userArticleService.publish(publish, id, user.getId());
                     }
-                    userArticleService.publish(publish, title, user.getId());
                 }
                 if (button == 4) {
                     Article article = new Article();

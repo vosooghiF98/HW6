@@ -9,15 +9,23 @@ public class UserService {
     UserRepository userRepository = new UserRepository();
 
     public Boolean save(User user) throws SQLException {
-        ResultSet resultSet = userRepository.checkSave(user.getNationalCode());
+        ResultSet resultSet = userRepository.checkSaveByNationalCode(user.getNationalCode());
+        ResultSet resultSet1 = userRepository.checkSaveByUserName(user.getUserName());
         if (!resultSet.next()) {
-            userRepository.save(user);
-            System.out.println("Your password is your national code.");
-            System.out.println("Sign Up was successful.");
-            resultSet.close();
-            return true;
+            if (!resultSet1.next()){
+                userRepository.save(user);
+                System.out.println("Your password is your national code.");
+                System.out.println("Sign Up was successful.");
+                resultSet.close();
+                resultSet1.close();
+                return true;
+            }else {
+                System.out.println("This username has already been used!");
+                resultSet1.close();
+                return false;
+            }
         }else {
-            System.out.println("You have already registered!");
+            System.out.println("There is a user with this national code!");
             resultSet.close();
             return false;
         }

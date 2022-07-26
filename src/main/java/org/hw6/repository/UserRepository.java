@@ -46,7 +46,7 @@ public class UserRepository {
         preparedStatement.close();
     }
 
-    public ResultSet checkSave(String nationalCode) throws SQLException {
+    public ResultSet checkSaveByNationalCode(String nationalCode) throws SQLException {
         String query = """
                 select * from users where nationalcode = ?;
                 """;
@@ -54,4 +54,14 @@ public class UserRepository {
         preparedStatement.setString(1, nationalCode);
         return preparedStatement.executeQuery();
     }
+
+    public ResultSet checkSaveByUserName(String userName) throws SQLException {
+        String query = """
+                select * from users where username = ?;
+                """;
+        PreparedStatement preparedStatement = DBConfig.getConnection().prepareStatement(query);
+        preparedStatement.setString(1, userName);
+        return preparedStatement.executeQuery();
+    }
+
 }
