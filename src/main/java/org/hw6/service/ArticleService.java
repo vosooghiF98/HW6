@@ -11,11 +11,16 @@ public class ArticleService {
 
     public void loadAll() throws SQLException {
         ResultSet resultSet = articleRepository.loadByPublished();
+        boolean temp = false;
         while (resultSet.next()) {
             Article article = new Article();
             article.setTitle(resultSet.getString("title"));
             article.setBrief(resultSet.getString("brief"));
             System.out.println("Title : " + article.getTitle() + "\n" + "Brief : " + article.getBrief());
+            temp = true;
+        }
+        if (!temp){
+            System.out.println("There is nothing to show!");
         }
         resultSet.close();
     }
