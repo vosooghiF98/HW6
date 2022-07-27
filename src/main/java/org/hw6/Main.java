@@ -8,6 +8,7 @@ import org.hw6.service.UserService;
 
 import java.sql.SQLException;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class Main {
     //check function input
@@ -71,7 +72,16 @@ public class Main {
                 }
                 user.setNationalCode(nationalCode);
                 System.out.print("Enter birthday : ");
-                user.setBirthday(input.next());
+                String regex = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
+                while (true){
+                    String date = input.next();
+                    if (Pattern.matches(regex,date)){
+                        user.setBirthday(input.next());
+                        break;
+                    }else {
+                        System.out.println("Enter date in this format : yyyy-mm-dd ");
+                    }
+                }
                 if (userService.save(user)){
                     break;
                 }
