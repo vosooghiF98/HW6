@@ -71,9 +71,9 @@ public class Main {
                     }
                 }
                 user.setNationalCode(nationalCode);
-                System.out.print("Enter birthday : ");
                 String regex = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
                 while (true){
+                    System.out.print("Enter birthday : ");
                     String date = input.next();
                     if (Pattern.matches(regex,date)){
                         user.setBirthday(input.next());
@@ -197,7 +197,17 @@ public class Main {
                     article.setBrief(input.nextLine());
                     System.out.print("Enter content : ");
                     article.setContent(input.nextLine());
-                    System.out.print("Enter create date : ");
+                    String regex = "^\\d{4}\\-(0?[1-9]|1[012])\\-(0?[1-9]|[12][0-9]|3[01])$";
+                    while (true){
+                        System.out.print("Enter create date : ");
+                        String date = input.next();
+                        if (Pattern.matches(regex,date)){
+                            article.setCreateDate(date);
+                            break;
+                        }else {
+                            System.out.println("Enter date in this format : yyyy-mm-dd ");
+                        }
+                    }
                     article.setCreateDate(input.next());
                     articleService.save(article, user.getId());
                     System.out.println("Your article saved.");
