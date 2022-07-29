@@ -208,7 +208,6 @@ public class Main {
                             System.out.println("Enter date in this format : yyyy-mm-dd ");
                         }
                     }
-                    article.setCreateDate(input.next());
                     articleService.save(article, user.getId());
                     System.out.println("Your article saved.");
                 }
