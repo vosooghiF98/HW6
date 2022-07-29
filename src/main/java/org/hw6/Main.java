@@ -76,7 +76,7 @@ public class Main {
                     System.out.print("Enter birthday : ");
                     String date = input.next();
                     if (Pattern.matches(regex,date)){
-                        user.setBirthday(input.next());
+                        user.setBirthday(date);
                         break;
                     }else {
                         System.out.println("Enter date in this format : yyyy-mm-dd ");
